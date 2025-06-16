@@ -5,6 +5,7 @@ import {
     DialogContent, DialogActions, TextField, Pagination, FormControl, InputLabel, Select, MenuItem
 } from '@mui/material';
 import { MainContext } from '../../context/index.jsx';
+import AccessDenied from '../../Error/AccessDenied.jsx'
 import { useNavigate } from 'react-router';
 
 const AllDiscount = () => {
@@ -25,6 +26,12 @@ const AllDiscount = () => {
         maxUses: '',
         discountPercentage: '',
     })
+
+
+
+    if (!["admin"].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
 
 
     useEffect(() => {
@@ -303,7 +310,7 @@ const AllDiscount = () => {
                                             Edit
                                         </Button>
                                         <Button
-                                            disabled={adminRole?.toLowerCase() === "editor"}
+                                            disabled={!adminRole?.toLowerCase() === "admin"}
                                             onClick={() => handleDelete(discount._id)}
                                             variant="outlined"
                                             color="secondary"

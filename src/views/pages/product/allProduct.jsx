@@ -154,7 +154,8 @@ const ProductDashboard = () => {
                             <TableBody>
                                 {products.map((product, index) => (
                                     <TableRow key={product.id}>
-                                        <TableCell align='center'>{(currentPage - 1) * products.length + index + 1}</TableCell>
+                                        <TableCell align="center">{(currentPage - 1) * 10 + index + 1}</TableCell>
+
                                         <TableCell align='center'>{product.title || 'N/A'}</TableCell>
                                         <TableCell align='center'>{product.category.title}</TableCell>
                                         <TableCell align='center'>${product.discountedPrice}</TableCell>

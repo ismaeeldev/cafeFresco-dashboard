@@ -6,19 +6,19 @@ import {
 } from '@mui/material';
 import { MainContext } from '../../context/index.jsx';
 import { useNavigate } from 'react-router';
-import AccessDenied from '../../Error/AccessDenied.jsx'
 import { Chip } from '@mui/material';
+import AccessDenied from '../../Error/AccessDenied.jsx'
 
 
 const AllPermission = () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    const { adminRole } = useContext(MainContext);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [openModal, setOpenModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
     const [editRole, setEditRole] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const { adminRole } = useContext(MainContext);
     const [allPermission, setAllPermission] = useState([])
     const permissionPerPage = 10;
     const [formData, setFormData] = useState({
@@ -33,6 +33,7 @@ const AllPermission = () => {
             <AccessDenied />
         );
     }
+
 
 
     const handleChange = (e) => {
@@ -119,7 +120,6 @@ const AllPermission = () => {
     };
 
 
-
     const handleEditRole = async () => {
         if (!editRole?.email || !editRole?.role) {
             return alert("Email or role is missing. Please reload and try again.");
@@ -148,7 +148,6 @@ const AllPermission = () => {
             alert(`Error: ${error.message}`);
         }
     };
-
 
 
     const fetchPermission = async () => {

@@ -80,7 +80,7 @@ export default function NotificationList({ notifications }) {
             )}
             {notif.type === 'order' && (
               <Button onClick={() => { navigate('/admin/all-order') }} variant="contained" endIcon={<IconBrandTelegram stroke={1.5} size={20} />} sx={{ width: 'min-content' }}>
-                View Order
+                View
               </Button>
             )}
           </Stack>

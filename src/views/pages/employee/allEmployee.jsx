@@ -6,6 +6,7 @@ import {
 import { MainContext } from '../../context/index.jsx';
 import { useNavigate } from 'react-router';
 
+import AccessDenied from '../../Error/AccessDenied.jsx'
 let searchTimeout;
 
 const EmployeeList = () => {
@@ -18,6 +19,13 @@ const EmployeeList = () => {
     const [totalPages, setTotalPages] = useState(1);
     const { departments, adminRole } = useContext(MainContext);
     const navigate = useNavigate();
+
+
+    if (!["admin", "manager",'editor'].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
+
+
 
     const fetchEmployee = async () => {
         setLoading(true);
@@ -205,7 +213,7 @@ const EmployeeList = () => {
                                                     Edit
                                                 </Button>
                                                 <Button
-                                                    disabled={adminRole?.toLowerCase() === 'editor'}
+                                                    disabled={!adminRole?.toLowerCase() === 'admin'}
                                                     onClick={() => handleDelete(employee._id)}
                                                     variant="outlined"
                                                     color="secondary"

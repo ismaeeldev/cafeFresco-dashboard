@@ -2,11 +2,20 @@ import React, { useContext, useEffect, useState } from 'react';
 import { TextField, Button, Card, CardContent, Grid, Typography, MenuItem, Switch, Box, Stack } from '@mui/material';
 import { MainContext } from '../../context/index.jsx';
 import { useNavigate } from 'react-router';
+import AccessDenied from '../../Error/AccessDenied.jsx'
 
 const EmployeeAddPage = () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     const { departments } = useContext(MainContext);
+    const { adminRole } = useContext(MainContext);
     const navigate = useNavigate();
+
+
+
+
+    if (!["admin", "manager", 'editor'].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
 
     const [formData, setFormData] = useState({
         name: '',

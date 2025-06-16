@@ -30,6 +30,13 @@ const AllUser = () => {
 
     const permissionPerPage = 10;
 
+
+    if (!["admin", "manager"].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
+
+
+
     useEffect(() => {
         fetchUsers(currentPage);
     }, [currentPage]);

@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { MainContext } from '../../context/index.jsx';
 import { useNavigate } from 'react-router';
+import AccessDenied from '../../Error/AccessDenied.jsx'
 import Switch from '@mui/material/Switch';
 
 
@@ -27,6 +28,11 @@ const Department = () => {
         isActive: false,
     })
 
+
+
+    if (!["admin", "manager"].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
 
     useEffect(() => {
         fetchDepartments();
@@ -288,7 +294,7 @@ const Department = () => {
                                             Edit
                                         </Button>
                                         <Button
-                                            disabled={adminRole?.toLowerCase() === "editor"}
+                                            disabled={!adminRole?.toLowerCase() === "admin"}
                                             onClick={() => handleDelete(item._id)}
                                             variant="outlined"
                                             color="secondary"

@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { TextField, MenuItem, Select, FormControl, InputLabel, Container, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Pagination, Button, CircularProgress, Dialog, DialogContent, DialogActions, DialogTitle, } from '@mui/material';
 import { MainContext } from '../../context/index.jsx';
 import { useNavigate } from 'react-router';
+import AccessDenied from '../../Error/AccessDenied.jsx'
 
 let searchTimeout;
 
@@ -18,6 +19,13 @@ const ProductDashboard = () => {
     const navigate = useNavigate();
     const [formData, setFormData] = useState({ id: '', stock: '' });
     const [openModal, setModal] = useState(false)
+
+
+
+
+    if (!["admin", "manager"].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
 
 
     const fetchProducts = async () => {

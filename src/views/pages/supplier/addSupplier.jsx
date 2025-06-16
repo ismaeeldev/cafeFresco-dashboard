@@ -13,6 +13,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router';
 import { MainContext } from '../../context/index.jsx';
+import AccessDenied from '../../Error/AccessDenied.jsx'
 
 
 const SupplierAddPage = () => {
@@ -20,6 +21,7 @@ const SupplierAddPage = () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
     const navigate = useNavigate();
     const { distributer } = useContext(MainContext);
+    const { adminRole } = useContext(MainContext);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -30,6 +32,12 @@ const SupplierAddPage = () => {
         distributor: '',
         isActive: true
     });
+
+
+
+    if (!["admin", "manager",'editor'].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;

@@ -11,14 +11,15 @@ import { useNavigate } from 'react-router';
 import PersonIcon from '@mui/icons-material/Person';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import PaymentsIcon from '@mui/icons-material/Payments';
+import AccessDenied from '../../Error/AccessDenied.jsx'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 
 
 const OrderDashboard = () => {
     const BASE_URL = import.meta.env.VITE_BASE_URL;
-    const { adminRole } = useContext(MainContext);
     const navigate = useNavigate();
-
+    const { adminRole } = useContext(MainContext);
+    
     const [openViewModal, setViewModal] = useState(false);
     const [openEditModal, setEditModal] = useState(false);
     const [editOrder, setEditOrder] = useState(null);
@@ -35,6 +36,13 @@ const OrderDashboard = () => {
     const [products, setProducts] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
     const [viewData, setViewData] = useState({});
+    
+    
+    
+
+    if (!["admin", "manager"].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
 
 
     const handleView = (order) => {
@@ -262,22 +270,35 @@ const OrderDashboard = () => {
                                         <TableCell align="center">{new Date(order.createdAt).toLocaleDateString()}</TableCell>
 
                                         <TableCell>
-                                            <Button onClick={() => { handleView(order) }} variant="outlined" color="primary" size="small" style={{ border: "2px solid", borderRadius: '8px' }}>
-                                                View
-                                            </Button>
-                                            <Button
-
-                                                disabled={adminRole?.toLowerCase() === "editor"}
-                                                variant="outlined"
-                                                color="secondary"
-                                                size="small"
-                                                style={{ marginLeft: '8px', border: "2px solid", borderRadius: '8px' }}
-                                                onClick={() => { handleEdit({ orderId: order._id, orderStatus: order.orderStatus, paymentStatus: order.paymentStatus }) }}
-
-                                            >
-                                                Edit
-                                            </Button>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'nowrap' }}>
+                                                <Button
+                                                    onClick={() => handleView(order)}
+                                                    variant="outlined"
+                                                    color="primary"
+                                                    size="small"
+                                                    style={{ border: '2px solid', borderRadius: '8px' }}
+                                                >
+                                                    View
+                                                </Button>
+                                                <Button
+                                                    disabled={adminRole?.toLowerCase() === 'editor'}
+                                                    variant="outlined"
+                                                    color="secondary"
+                                                    size="small"
+                                                    onClick={() =>
+                                                        handleEdit({
+                                                            orderId: order._id,
+                                                            orderStatus: order.orderStatus,
+                                                            paymentStatus: order.paymentStatus,
+                                                        })
+                                                    }
+                                                    style={{ border: '2px solid', borderRadius: '8px' }}
+                                                >
+                                                    Edit
+                                                </Button>
+                                            </div>
                                         </TableCell>
+
                                     </TableRow>
                                 ))}
                             </TableBody>

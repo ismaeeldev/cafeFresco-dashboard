@@ -9,6 +9,7 @@ import {
 import { MainContext } from '../../context/index.jsx';
 import { useNavigate } from 'react-router';
 import Switch from '@mui/material/Switch';
+import AccessDenied from '../../Error/AccessDenied.jsx'
 
 
 const Distributor = () => {
@@ -36,6 +37,14 @@ const Distributor = () => {
         supplyCategories: [],
         isActive: true
     });
+
+
+
+
+    if (!["admin", "manager"].includes(adminRole?.toLowerCase())) {
+        return <AccessDenied />;
+    }
+
 
     const handleCategoryChange = (event) => {
         setSortCategory(event.target.value);
@@ -406,7 +415,7 @@ const Distributor = () => {
                                                 Edit
                                             </Button>
                                             <Button
-                                                disabled={adminRole?.toLowerCase() === "editor"}
+                                                disabled={!adminRole?.toLowerCase() === "admin"}
                                                 onClick={() => handleDelete(item._id)}
                                                 variant="outlined"
                                                 color="secondary"

@@ -53,7 +53,7 @@ const AllCategories = () => {
         navigate(`/admin/edit-category/${id}`);
     };
 
-   
+
 
     return (
         <Container>
@@ -61,7 +61,7 @@ const AllCategories = () => {
                 <Button variant="contained" color="error" onClick={() => navigate('/admin/dashboard')}>
                     Cancel
                 </Button>
-             
+
             </Box>
 
 
@@ -146,7 +146,7 @@ const AllCategories = () => {
                 </TableContainer>
             )}
 
-           
+
 
 
             {/* Pagination */}
