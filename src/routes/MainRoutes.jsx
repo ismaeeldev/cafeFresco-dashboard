@@ -39,6 +39,10 @@ const MainRoutes = {
   path: '/',
   children: [
     {
+      index: true,
+      element: <Navigate to="/admin" />
+    },
+    {
       index: true, // Auto-loads `Sample` when `/` is visited
       element: <Sample />
     },
