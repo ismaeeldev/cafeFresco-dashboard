@@ -1,75 +1,227 @@
-# Getting Started with Create React App
+# Cafe Fresco Dashboard
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern admin dashboard for Cafe Fresco, built with React, Vite, Material UI, and React Router.
+
+This panel is designed for managing daily restaurant operations such as products, categories, orders, users, inventory, suppliers, departments, employees, and more.
+
+## Table of Contents
+
+- Overview
+- Features
+- Tech Stack
+- Project Structure
+- Prerequisites
+- Beginner Setup Guide
+- Environment Variables
+- Available Scripts
+- Build and Deployment
+- Troubleshooting
+- Developer
+
+## Overview
+
+Cafe Fresco Dashboard is a role-aware admin interface that connects to a backend API and helps administrators manage cafe data from one place.
+
+It includes secure login, protected admin routes, dashboard analytics cards/charts, and CRUD pages for multiple business modules.
+
+## Features
+
+- Secure admin authentication flow
+	- Login page
+	- Forgot password flow
+	- Reset password flow
+	- Cookie-based admin token handling
+
+- Protected routing
+	- Admin pages are protected through route guards
+	- Unauthorized users are redirected to login
+	- Access denied page for restricted roles
+
+- Dashboard analytics
+	- Earnings and order summary cards
+	- Monthly and yearly order stats
+	- Growth chart and popular section
+
+- Business management modules
+	- Product management (add, list, edit)
+	- Category management (add, list, edit)
+	- Order listing
+	- Permission listing
+	- User listing
+	- Discount code module
+	- Department and distributor modules
+	- Employee management (add, list, edit)
+	- Supplier management (add, list, edit)
+	- Inventory module
+
+- UI and user experience
+	- Responsive layout with sidebar and header
+	- Theme customization support
+	- Reusable UI components and cards
+	- Smooth scrolling and lazy-loaded routes
+
+- Deployment-ready setup
+	- Vite build pipeline
+	- Vercel rewrite config for SPA routing
+
+## Tech Stack
+
+- Core
+	- React 18
+	- Vite 6
+	- React Router 7
+
+- UI and styling
+	- Material UI 6
+	- Emotion
+	- SCSS
+	- Fontsource (Roboto, Inter, Poppins)
+	- Tabler Icons
+
+- Data and utilities
+	- SWR
+	- js-cookie
+	- lodash-es
+	- yup
+
+- Charts and motion
+	- ApexCharts + react-apexcharts
+	- framer-motion
+
+- Quality and tooling
+	- ESLint 9
+	- Yarn 4
+
+## Project Structure
+
+Main folders inside src:
+
+- api: local API/state helpers
+- assets: images and SCSS styles
+- contexts: app configuration context
+- hooks: reusable hooks
+- layout: main/minimal layout and navigation system
+- menu-items: sidebar menu definitions
+- routes: route configuration and guards
+- themes: MUI theme, palette, typography, overrides
+- ui-component: reusable UI blocks and cards
+- views: all pages (dashboard, auth, product, order, etc.)
+
+## Prerequisites
+
+Install these before running the project:
+
+- Node.js 18 or newer
+- Corepack enabled (recommended for Yarn 4)
+
+Optional but recommended:
+
+- Git
+- VS Code
+
+## Beginner Setup Guide
+
+Follow these steps from zero:
+
+1) Clone the repository
+
+git clone <your-repository-url>
+
+2) Open project folder
+
+cd cafeFresco-dashboard
+
+3) Enable Corepack (one-time on your machine)
+
+corepack enable
+
+4) Install dependencies
+
+yarn install
+
+5) Create environment file
+
+Create a .env file in project root and add the variables shown in the Environment Variables section below.
+
+6) Start development server
+
+yarn start
+
+7) Open in browser
+
+By default Vite runs on port 5173:
+
+http://localhost:5173
+
+## Environment Variables
+
+Create a file named .env in the project root:
+
+VITE_BASE_URL=http://localhost:5000
+VITE_APP_BASE_NAME=/
+VITE_APP_VERSION=4.0.0
+
+Variable meaning:
+
+- VITE_BASE_URL: Backend API base URL
+- VITE_APP_BASE_NAME: Router basename and Vite base path
+- VITE_APP_VERSION: App version shown in sidebar chip
+
+Note:
+
+- If you deploy under a subpath, update VITE_APP_BASE_NAME accordingly (example: /dashboard/).
 
 ## Available Scripts
 
-In the project directory, you can run:
+- yarn start
+	- Runs the app in development mode
 
-### `Yarn`
+- yarn build
+	- Builds optimized production files
 
-Install packages
+- yarn preview
+	- Serves the production build locally for checking
 
-### `Yarn start`
+- yarn lint
+	- Runs ESLint checks in src
 
-Runs the app in the development mode.\
+- yarn lint:fix
+	- Auto-fixes lint issues where possible
 
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- yarn prettier
+	- Formats source files with Prettier
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Build and Deployment
 
-### `yarn test`
+Production build:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+yarn build
 
-### `yarn build`
+Preview production build locally:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+yarn preview
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Vercel notes:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- vercel.json already includes SPA rewrite to index.html
+- Ensure environment variables are configured in your Vercel project settings
 
-### `yarn eject`
+## Troubleshooting
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Blank page or route errors after deploy
+	- Check VITE_APP_BASE_NAME and hosting base path
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- API calls failing
+	- Verify VITE_BASE_URL points to your backend
+	- Make sure backend CORS and routes are configured
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Login not persisting
+	- Check browser cookie settings
+	- Ensure backend is returning token correctly
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- Dependency issues
+	- Remove node_modules and reinstall with yarn install
 
-## Learn More
+## Developer
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Developed by Muhammad Ismaeel.
